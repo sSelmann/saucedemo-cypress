@@ -1,0 +1,19 @@
+{
+  "name": "cypress-with-saucedemo",
+  "version": "1.0.0",
+  "description": "Cypress automation tests with saucedemo website.",
+  "main": "cypress",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cypress",
+    "automation",
+    "test"
+  ],
+  "author": "Selman Tanis",
+  "license": "MIT",
+  "devDependencies": {
+    "cypress": "^13.3.0"
+  }
+}
