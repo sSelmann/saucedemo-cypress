@@ -1,6 +1,8 @@
 
 beforeEach(() => {
-    cy.login('standard_user', 'secret_sauce')
+    cy.fixture('users-config.json').then((config) => {
+        cy.loginWithUser(config.users.standard_user)
+    })
 });
 
 describe("Cart", () => {

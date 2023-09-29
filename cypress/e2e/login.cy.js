@@ -5,24 +5,21 @@ beforeEach(() => {
 describe('Login Page', () => {
   it('can login with valid credentials', () => {
   
-    cy.get('#user-name').type('standard_user')
-    .should('have.value', 'standard_user');
-    cy.get('#password').type('secret_sauce')
-    .should('have.value', 'secret_sauce')
-    cy.get('#login-button').click()
-    
-    cy.get('.shopping_cart_link')
-    .should('be.visible')
+  cy.fixture('users-config.json').then((config) => {
+      cy.loginWithUser(config.users.standard_user)
+  })
+
+  cy.get('.shopping_cart_link')
+  .should('be.visible')
+  cy.url().should('contain', '/inventory.html')
 
   });
 
   it('cant login with invalid credentials', () => {
   
-    cy.get('#user-name').type('wrong_user')
-    .should('have.value', 'wrong_user');
-    cy.get('#password').type('secret_sauce')
-    .should('have.value', 'secret_sauce')
-    cy.get('#login-button').click()
+    cy.fixture('users-config.json').then((config) => {
+      cy.loginWithUser(config.users.wrong_user)
+    })
 
     cy.get('[data-test="error"]')
     .should('have.text', 'Epic sadface: Username and password do not match any user in this service')
@@ -31,11 +28,9 @@ describe('Login Page', () => {
 
   it('cant login with locked_out_user', () => {
   
-    cy.get('#user-name').type('locked_out_user')
-    .should('have.value', 'locked_out_user');
-    cy.get('#password').type('secret_sauce')
-    .should('have.value', 'secret_sauce')
-    cy.get('#login-button').click()
+    cy.fixture('users-config.json').then((config) => {
+      cy.loginWithUser(config.users.locked_out_user)
+    })
 
     cy.get('[data-test="error"]')
     .should('have.text', 'Epic sadface: Sorry, this user has been locked out.')
@@ -44,11 +39,9 @@ describe('Login Page', () => {
 
   it('problem_user should be see wrong image on items', () => {
   
-    cy.get('#user-name').type('problem_user')
-    .should('have.value', 'problem_user');
-    cy.get('#password').type('secret_sauce')
-    .should('have.value', 'secret_sauce')
-    cy.get('#login-button').click()
+    cy.fixture('users-config.json').then((config) => {
+      cy.loginWithUser(config.users.problem_user)
+    })
 
     cy.get('img.inventory_item_img')
     .should('have.length', 6)
